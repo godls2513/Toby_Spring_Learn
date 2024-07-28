@@ -1,4 +1,4 @@
-package com.springbook.user;
+package com.springbook.test;
 
 import com.springbook.user.dao.*;
 import com.springbook.user.domain.*;

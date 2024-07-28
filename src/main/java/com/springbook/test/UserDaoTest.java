@@ -1,9 +1,8 @@
-package com.springbook.user;
+package com.springbook.test;
 
 import com.springbook.user.dao.*;
 import com.springbook.user.domain.*;
 import org.springframework.context.*;
-import org.springframework.context.annotation.*;
 import org.springframework.context.support.*;
 
 import java.io.*;
@@ -13,13 +12,13 @@ public class UserDaoTest {
     // 테스트
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         // Annotation을 이용한 DI
-//        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        //ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 
         // XML을 이용한 DI
         ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
 
         UserDao dao = context.getBean("userDao", UserDao.class);
-//        NoUseDataSourceUserDao dao = context.getBean("userDao", NoUseDataSourceUserDao.class);
+        //NoUseDataSourceUserDao dao = context.getBean("userDao", NoUseDataSourceUserDao.class);
 
         dao.delete("whiteship");
 
@@ -33,9 +32,13 @@ public class UserDaoTest {
         System.out.println(user.getId() + " 등록 성공");
 
         User userSelect = dao.get(user.getId());
-        System.out.println(userSelect.getName());
-        System.out.println(userSelect.getPassword());
 
-        System.out.println(userSelect.getId() + " 조회 성공");
+        if (!user.getName().equals(userSelect.getName())) {
+            System.out.println("테스트 실패 (name)");
+        } else if (!user.getPassword().equals(userSelect.getPassword())) {
+            System.out.println("테스트실패 (password)");
+        } else {
+            System.out.println("조회 테스트 성공");
+        }
     }
 }
